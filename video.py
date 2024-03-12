@@ -1,29 +1,18 @@
 import asyncio
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart
+from aiogram import Bot, Dispatcher
 from decouple import config
-
-bot = Bot(token=config("TOKEN"))
-
-dp = Dispatcher()
-
-
-@dp.message(CommandStart())
-async def start_cmd(message: types.Message):
-    await message.answer("this answer for start command")
-
-
-
-@dp.message()
-async def echo(message: types.Message):
-    await message.answer("Hello my dear. Glory to Ukraine")
-
+from handlers import privat, group
+from optionals import options
 
 
 async def main():
+    bot = Bot(token=config('TOKEN'))
+    dp = Dispatcher()
+    dp.include_routers(privat.private_router, group.group_router)
+
     await bot.delete_webhook(drop_pending_updates=True)
+    await bot.set_my_commands(commands=options.private)
     await dp.start_polling(bot)
 
 
 asyncio.run(main())
-
