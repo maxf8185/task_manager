@@ -27,18 +27,13 @@ async def options_cmd(message: types.Message):
     await message.answer('info about <b><u>bot</u></b>')
 
 
-@private_router.message(Command('homeworks'))
-async def options_cmd(message: types.Message):
-    await message.answer('all homeworks')
-
-
 @private_router.message(or_f(Command('links'), F.text.lower() == 'links'))
 async def options_cmd(message: types.Message):
     text = as_marked_section(
         Bold('Active links'),
         TextLink('study bot', url='https://t.me/GoITeens_Study_bot'),
-        TextLink('instagram', url='https://www.instagram.com/maxf.111?igsh=eXE2OTM5YWFpOWp1'),
-        marker='!'
+        TextLink('tech google meet', url='https://meet.google.com/mvq-sahu-szm'),
+        marker='🎗'
     )
     await message.answer(text.as_html())
 
